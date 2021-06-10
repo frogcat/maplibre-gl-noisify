@@ -1,7 +1,12 @@
 # maplibre-gl-noisify
 A maplibre-gl-js plugin to add noise effect to fill &amp; fill-extrusion
 
+[![maplibre-gl-noisify](https://repository-images.githubusercontent.com/375623742/8dafc800-ca1a-11eb-9e50-697c12006168)](https://frogcat.github.io/maplibre-gl-noisify/noisify.html)
+
+
 # demo
+
+- <https://frogcat.github.io/maplibre-gl-noisify/noisify.html>
 
 - <https://frogcat.github.io/maplibre-gl-noisify/fill.html>
 
@@ -9,7 +14,7 @@ A maplibre-gl-js plugin to add noise effect to fill &amp; fill-extrusion
 
 # usage
 
-```
+```index.html
 <html>
 <head>
   <meta charset="UTF-8">

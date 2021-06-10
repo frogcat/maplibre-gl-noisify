@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>maplibre-gl-noisify</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@1.14.0/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@1.14.0/dist/maplibre-gl.js"></script>
+  <script src="./maplibre-gl-noisify.js"></script>
+</head>
+
+<body>
+  <div id="map" style="position:absolute;top:0;left:0;bottom:0;right:0;"></div>
+  <script>
+    (async function() {
+      const std = await fetch("https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/pale.json").then(res => res.json());
+      const one = await fetch("https://optgeo.github.io/one/style.json").then(res => res.json());
+      Object.keys(one.sources).forEach(key => {
+        std.sources[key] = one.sources[key];
+      });
+
+      std.sources.plateau = {
+        "type": "vector",
+        "tiles": [
+          "https://indigo-lab.github.io/plateau-tokyo23ku-building-mvt-2020/{z}/{x}/{y}.pbf"
+        ],
+        "minzoom": 10,
+        "maxzoom": 16,
+        "attribution": "<a href='https://github.com/indigo-lab/plateau-tokyo23ku-building-mvt-2020'>plateau-tokyo23ku-building-mvt-2020 by indigo-lab</a> (<a href='https://www.mlit.go.jp/plateau/'>国土交通省 Project PLATEAU</a> のデータを加工して作成)"
+      };
+
+      std.layers = [].concat(
+        one.layers,
+        std.layers.filter(a => a.type !== "symbol"), {
+          "id": "bldg",
+          "type": "fill-extrusion",
+          "source": "plateau",
+          "source-layer": "bldg",
+          "minzoom": 10,
+          "maxzoom": 20,
+          "paint": {
+            "fill-extrusion-color": "#808080",
+            "fill-extrusion-opacity": 0.8,
+            "fill-extrusion-height": ["*", 1.0, ["get", "measuredHeight"]]
+          }
+        },
+        std.layers.filter(a => a.type === "symbol")
+      );
+
+      const map = new maplibregl.Map({
+        "container": "map",
+        "center": [139.751491, 35.677163],
+        "zoom": 15.72,
+        "pitch": 60,
+        "bearing": 22,
+        "hash": true,
+        "style": std
+      });
+      map.on("load", function() {
+        map.noisify("one", {
+          colors: ["rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)"],
+          repeat: 4,
+          randomization: 0.2
+        });
+        map.noisify("bldg", {
+          colors: ["rgba(0,0,0,0.1)"],
+          repeat: 8,
+          randomization: 0.2,
+          unit: 1,
+          size: 128
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>
