@@ -23,9 +23,11 @@ A maplibre-gl-js plugin to add noise effect to fill &amp; fill-extrusion
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@1.14.0/dist/maplibre-gl.css" />
   <script src="https://unpkg.com/maplibre-gl@1.14.0/dist/maplibre-gl.js"></script>
   <!-- import maplibre-gl-noisify.js -->
-  <script src="https://frogcat.github.io/maplibre-gl-noisify/maplibre-gl-noisify.js"/>
+  <script src="https://frogcat.github.io/maplibre-gl-noisify/maplibre-gl-noisify.js"></script>
 </head>
 <body>
+  <div id="map" style="position:absolute;top:0;left:0;bottom:0;right:0;"></div>
+  <script>  
     // initialize Map
     const map = new maplibregl.Map({
       "container": "map",
@@ -42,6 +44,7 @@ A maplibre-gl-js plugin to add noise effect to fill &amp; fill-extrusion
       // call map.noisify(layerId) to noisify
       map.noisify("bldg");
     });
+  </script>
 </body>
 </html>
 ```
