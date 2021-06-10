@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>maplibre-gl-noisify: fill</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@1.14.0/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@1.14.0/dist/maplibre-gl.js"></script>
+  <script src="./maplibre-gl-noisify.js"></script>
+</head>
+
+<body>
+  <div id="map" style="position:absolute;top:0;left:0;bottom:0;right:0;"></div>
+  <script>
+    const style = {
+      "center": [
+        129.907088,
+        32.721957
+      ],
+      "layers": [{
+        "id": "pale",
+        "type": "raster",
+        "source": "pale",
+        "minzoom": 5,
+        "maxzoom": 20
+      }, {
+        "id": "one",
+        "paint": {
+          "fill-opacity": 0.75,
+          "fill-color": [
+            "match",
+            [
+              "to-number",
+              [
+                "get",
+                "code"
+              ]
+            ],
+            [
+              10101,
+              1010101,
+              11201,
+              11202,
+              11203,
+              11204
+            ],
+            "#d9cbae",
+            [
+              10202,
+              10204,
+              2010201
+            ],
+            "#9466ab",
+            [
+              10205,
+              10206
+            ],
+            "#cc99ff",
+            [
+              10301,
+              10302,
+              10303,
+              10304,
+              10308,
+              10314,
+              10305,
+              10508,
+              2010101,
+              10306,
+              10307,
+              10310,
+              10312
+            ],
+            "#ffaa00",
+            [
+              10401,
+              10402,
+              10403,
+              10404,
+              10406,
+              10407,
+              3010101
+            ],
+            "#99804d",
+            [
+              10501,
+              10502,
+              3020101
+            ],
+            "#cacc60",
+            [
+              10503,
+              3040101
+            ],
+            "#ffff33",
+            [
+              10506,
+              10507,
+              10801
+            ],
+            "#fbe09d",
+            [
+              10504,
+              10505,
+              10512,
+              3050101
+            ],
+            "#ffff99",
+            [
+              10601,
+              2010301
+            ],
+            "#a3cc7e",
+            [
+              10701,
+              3030101,
+              10702,
+              10705
+            ],
+            "#bbff99",
+            [
+              10703,
+              10804,
+              3030201
+            ],
+            "#00d1a4",
+            [
+              10704,
+              3040201,
+              3040202
+            ],
+            "#6699ff",
+            [
+              3040301
+            ],
+            "#1f9999",
+            [
+              10802,
+              10803,
+              10807,
+              10808
+            ],
+            "#9f9fc4",
+            [
+              10805,
+              10806,
+              10901,
+              10903,
+              5010201
+            ],
+            "#e5ffff",
+            [
+              10904,
+              5010301
+            ],
+            "#779999",
+            [
+              11001,
+              11003,
+              11009,
+              11011,
+              4010301
+            ],
+            "#85c4d1",
+            [
+              11002
+            ],
+            "#8ad8b6",
+            [
+              11004,
+              11006,
+              11007,
+              11014
+            ],
+            "#ef8888",
+            [
+              4010201,
+              11005
+            ],
+            "#ff4f4f",
+            [
+              11008,
+              4010101
+            ],
+            "#c37aff",
+            [
+              11010
+            ],
+            "#ffe8e8",
+            [
+              999999
+            ],
+            "#144dfa",
+            [
+              101
+            ],
+            "#e6e600",
+            [
+              102
+            ],
+            "#00e2e6",
+            [
+              103
+            ],
+            "#2ae600",
+            [
+              104
+            ],
+            "#e60400",
+            [
+              105
+            ],
+            "#5e5ce6",
+            [
+              9999
+            ],
+            "#ff00ff",
+            "#aaaaaa"
+          ]
+        },
+        "source": "v",
+        "source-layer": "one",
+        "type": "fill"
+      }],
+      "sources": {
+        "pale": {
+          "type": "raster",
+          "tiles": [
+            "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
+          ],
+          "minzoom": 5,
+          "maxzoom": 18,
+          "tileSize": 256,
+          "attribution": "<a href='http://maps.gsi.go.jp/development/ichiran.html'>地理院タイル</a>"
+        },
+        "v": {
+          "attribution": "国土地理院ベクトルタイル提供実験",
+          "maxzoom": 12,
+          "minzoon": 10,
+          "tiles": [
+            "https://optgeo.github.io/one/zxy/{z}/{x}/{y}.pbf"
+          ],
+          "type": "vector"
+        }
+      },
+      "version": 8,
+      "zoom": 13
+    };
+
+    const map = new maplibregl.Map({
+      "container": "map",
+      "center": [139.68786, 35.68355],
+      "zoom": 14.65,
+      "pitch": 60,
+      "bearing": 22,
+      "hash": true,
+      "style": style
+    });
+
+    map.on("load", function() {
+      map.noisify("one", {
+        colors: ["rgba(255,255,255,0.2)"],
+        repeat: 2
+      });
+    });
+  </script>
+</body>
+
+</html>
